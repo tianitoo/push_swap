@@ -102,7 +102,7 @@ int main(int argv, char **argc)
 	stk = new_stack();
 	if (check_double(argc) == 0)
 		{
-			ft_printf("ERROR");
+			ft_printf("ERROiR");
 			return (0);
 		}
 	while (i > 1)
@@ -112,7 +112,7 @@ int main(int argv, char **argc)
 			j++;
 		if (ft_strlen(argc[i - 1]) != j)
 		{
-			ft_printf("ERROR");
+			ft_printf("ERROoR");
 			return (0);
 		}
 		nbr = atoi(argc[i - 1]);
