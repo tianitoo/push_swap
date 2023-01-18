@@ -32,9 +32,7 @@ stack push_stack(stack stk, int i)
 
 	e = malloc(sizeof(*e));
 	if(e == NULL)
-	{
-		exit(0);
-	}
+		return (NULL);
 	e->value = i;
 	e->next = stk;
 	return (e);

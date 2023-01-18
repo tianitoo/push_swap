@@ -51,7 +51,7 @@ int	first(stack stk)
 
 int second(stack stk)
 {
-	return ((stk)->next->value);
+	return (stk->next->value);
 }
 
 int last(stack stk)
@@ -104,7 +104,14 @@ char **split(char *s)
 	{
 		j = 0;
 		while (ss[i][j])
+		{
+			if (!ft_isdigit(ss[i][j]))
+			{
+				ft_printf("ERRO6R");
+				return (0);
+			}
 			j++;
+		}
 		// ft_printf("|%s|\n", ss[i]);
 		if (ft_strlen(ss[i]) != j)
 		{
@@ -115,6 +122,17 @@ char **split(char *s)
 	}
 			// ft_printf("test\n");
 	return (ss);
+}
+
+Bool stack_is_sorted(stack stk)
+{
+	while (!stack_is_empty(stk) && stack_length(stk) > 1)
+	{
+		if(first(stk) > second(stk))
+			return (False);
+		stk = stk->next;
+	}
+	return (True);
 }
 
 int main(int argv, char **argc)
@@ -135,6 +153,9 @@ int main(int argv, char **argc)
 	while (i > 0)
 	{
 		ss = split(argc[i]);
+		if (!ss)
+			return (0);
+		
 		while (*ss)
 		{
 			nbr = ft_atoi(*ss);
@@ -149,7 +170,9 @@ int main(int argv, char **argc)
 	// stk = pop_stack(stk);
 	// stk = clear_stack(stk);
 	// print_stack(stk);
-	push_swap(&stk);
+	// print_stack(stk);
+	if(stack_length(stk) > 1 && !stack_is_sorted(stk))
+		push_swap(&stk);
 	// print_stack(stk);
 	// print_stack(stk);
 	
