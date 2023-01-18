@@ -82,7 +82,8 @@ int check_double(char **ss)
 		j = i + 1;
 		while (ss[j])
 		{
-			if ((ft_strncmp(ss[i], ss[j], ft_strlen(ss[i])) == 0))
+			if ((ft_strncmp(ss[i], ss[j], ft_strlen(ss[i])) == 0) 
+					&& ft_strlen(ss[i]) == ft_strlen(ss[j]))
 				return (0);
 			j++;
 		}
@@ -90,34 +91,57 @@ int check_double(char **ss)
 	}
 	return (1);
 }
+
+char **split(char *s)
+{
+	int i;
+	char **ss;
+	int j;
+
+	i = 0;
+	ss = ft_split(s, ' ');
+	while (ss[i])
+	{
+		j = 0;
+		while (ss[i][j])
+			j++;
+		// ft_printf("|%s|\n", ss[i]);
+		if (ft_strlen(ss[i]) != j)
+		{
+			ft_printf("ERROoR");
+			return (0);
+		}
+		i++;
+	}
+			// ft_printf("test\n");
+	return (ss);
+}
+
 int main(int argv, char **argc)
 {
 	stack stk;
 	int i;
 	int nbr;
 	int j;
-	char *ss;
+	char **ss;
 
-	i = argv;
+	i = argv - 1;
 	stk = new_stack();
 	if (check_double(argc) == 0)
-		{
-			ft_printf("ERROiR");
-			return (0);
-		}
-	while (i > 1)
 	{
-		j = 0;
-		while (ft_isdigit(argc[i - 1][j]))
-			j++;
-		if (ft_strlen(argc[i - 1]) != j)
+		ft_printf("ERROiR");
+		return (0);
+	}
+	while (i > 0)
+	{
+		ss = split(argc[i]);
+		while (*ss)
 		{
-			ft_printf("ERROoR");
-			return (0);
+			nbr = ft_atoi(*ss);
+			if (nbr)
+				stk = push_stack(stk, nbr);
+			ss++;
 		}
-		nbr = atoi(argc[i - 1]);
-		if (nbr)
-			stk = push_stack(stk, nbr);
 		i--;
 	}
 	// print_stack(stk);
@@ -127,6 +151,6 @@ int main(int argv, char **argc)
 	// print_stack(stk);
 	push_swap(&stk);
 	// print_stack(stk);
-	
 	// print_stack(stk);
+	
 }
