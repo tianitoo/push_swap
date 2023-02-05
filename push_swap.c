@@ -5,7 +5,7 @@ stack *push_swap(stack *a)
 	stack b;
 	int length_a;
 
-	length_a = stack_length(*a) / 2;
+	length_a = stack_length(*a);
 	b = new_stack();
 	sort(a, &b);
 	return (a);
@@ -13,35 +13,94 @@ stack *push_swap(stack *a)
 
 void	sort(stack *a, stack *b)
 {
-	int small;
-	int index;
-	stack a_holder;
+	if (stack_length(*a) <= 3)
+		three(a, 'a');
+	else if (stack_length(*a) <= 5)
+		five(a, b);
 
-	while (!stack_is_empty(*a))
+	// else if (stack_length(*a) <= 100)
+	// 	hundred(*a, *b);
+	// else if (stack_length(*a) > 100)
+	// 	more(*a, *b);
+}
+
+void	three(stack *stk, char stk_name)
+{
+	while (!stack_is_sorted(*stk))
 	{
-		small = INT_MAX;
-		a_holder = *a;
-		index = 0;
-		while (!stack_is_empty(a_holder))
-		{
-			if (a_holder->value < small)
-				small = a_holder->value;
-			a_holder = a_holder->next;
-		}
-		a_holder = *a;
-		while (a_holder->value != small)
-		{
-			a_holder = a_holder->next;
-			index++;
-		}
-		if (index > stack_length(*a) / 2)
-			move_small(a, stack_length(*a) - index, rotate_back_a);
-		else
-			move_small(a, index, rotate_a);
-		push_b(a, b);
+		if (first(*stk) > second(*stk) && first(*stk) > last(*stk))
+			rotate(stk, stk_name);
+		if (second(*stk) > first(*stk) && second(*stk) > last(*stk))
+			rotate_back(stk, stk_name);
+		if (!stack_is_sorted(*stk))
+			*stk = swap(*stk, stk_name);
 	}
+}
+
+
+int isbigger(stack stk, int i)
+{
+
+	while (stk->next && stk->value < i)
+	{
+		stk = stk->next;
+	}
+	return (stk->value);
+}
+
+int find_small(stack stk)
+{
+	int small = INT_MAX;
+	int small_index;
+	int i;
+
+	i = 0;
+	while (!stack_is_empty(stk))
+	{
+		if (small > stk->value)
+		{
+			small = stk->value;
+			small_index = i;
+		}
+		stk = stk->next;
+		i++;
+
+	}
+	return (small_index);
+}
+
+void	five(stack *a, stack *b)
+{
+	int bigger;
+
+	push(a, b, 'b');
+	push(a, b, 'b');
+	three(a, 'a');
+	three(b, 'b');
 	while (!stack_is_empty(*b))
-		push_a(a, b);
+	{
+		bigger = isbigger(*a, first(*b));
+		while (bigger != first(*a))
+		{
+			if (bigger > stack_length(*a) / 2 && bigger != 1)
+				rotate(a, 'a');
+			else
+				rotate_back(a,'a');
+		}
+		if (first(*a) < first(*b))
+			rotate(a, 'a');
+		
+		push(a, b, 'a');
+	}
+	
+	while (!stack_is_sorted(*a))
+	{
+		if (find_small(*a) < stack_length(*a) / 2)
+			move_small(a, find_small(*a), 'a', rotate_back);
+		else
+			move_small(a, find_small(*a), 'a', rotate);
+	}
+
 }
 
 int	first(stack stk)
@@ -59,14 +118,18 @@ int last(stack stk)
 	return ((*tail_stack(&stk))->value);
 }
 
-void move_small(stack *a, int index, void (*rotate)(stack *a))
+void move_small(stack *a,
+				int index,
+				char name,
+				void (*rotate)(stack *a,
+				char stk_name))
 {
 	int i;
 
 	i = 0;
 	while (i < index)
 	{
-		(*rotate)(a);
+		(*rotate)(a, name);
 		i++;
 	}
 }
@@ -96,7 +159,7 @@ char **split(char *s)
 {
 	int i;
 	char **ss;
-	int j;
+	size_t	j;
 
 	i = 0;
 	ss = ft_split(s, ' ');
@@ -140,7 +203,6 @@ int main(int argv, char **argc)
 	stack stk;
 	int i;
 	int nbr;
-	int j;
 	char **ss;
 
 	i = argv - 1;
@@ -165,7 +227,7 @@ int main(int argv, char **argc)
 		}
 		i--;
 	}
-	// print_stack(stk);
+
 	// print_stack(stk);
 	// stk = pop_stack(stk);
 	// stk = clear_stack(stk);
@@ -173,6 +235,7 @@ int main(int argv, char **argc)
 	// print_stack(stk);
 	if(stack_length(stk) > 1 && !stack_is_sorted(stk))
 		push_swap(&stk);
+	// print_stack(stk);
 	// print_stack(stk);
 	// print_stack(stk);
 	

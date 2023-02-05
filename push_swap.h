@@ -25,23 +25,21 @@ void pop_stack(stack *stk);
 void	print_stack(stack stk);
 stack push_stack(stack stk, int i);
 stack *push_swap(stack *a);
-void push_a(stack *a, stack *b);
-void push_b(stack *a, stack *b);
-stack swap_a(stack stk);
-stack swap_b(stack stk);
-void rotate_a(stack *a);
-void rotate_b(stack *b);
+void push(stack *a, stack *b, char stk_name);
+stack swap(stack stk, char stk_name);
+void rotate(stack *a, char stk_name);
+void rotate_back(stack *a, char stk_name);
 stack *tail_stack(stack *stk);
 Bool	stack_is_empty(stack stk);
-void rotate_back_a(stack *a);
-void rotate_back_b(stack *b);
 void	sort(stack *a, stack *b);
 int	first(stack stk);
+void	five(stack *a, stack *b);
 int second(stack stk);
+Bool stack_is_sorted(stack stk);
 int check_double(char **ss);
+void	three(stack *stk, char stk_name);
 int last(stack stk);
-void move_small(stack *a, int index, void (*rotate)(stack *a));
-
-
+int find_small(stack stk);
+void move_small(stack *a, int index, char name, void (*rotate)(stack *a, char stk_name));
 
 #endif
