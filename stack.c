@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/06 14:08:53 by hnait             #+#    #+#             */
+/*   Updated: 2023/02/06 14:08:54 by hnait            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 // create empty stack
@@ -87,4 +99,61 @@ stack	clear_stack(stack stk)
 	while (!stack_is_empty(stk))
 		pop_stack(&stk);
 	return (stk);
+}
+
+int isbigger(stack stk, int i)
+{
+
+	while (stk->next && stk->value < i)
+	{
+		stk = stk->next;
+	}
+	return (stk->value);
+}
+
+int find_small(stack stk)
+{
+	int small = INT_MAX;
+	int small_index;
+	int i;
+
+	i = 0;
+	while (!stack_is_empty(stk))
+	{
+		if (small > stk->value)
+		{
+			small = stk->value;
+			small_index = i;
+		}
+		stk = stk->next;
+		i++;
+
+	}
+	return (small_index);
+}
+
+int	first(stack stk)
+{
+	return ((stk)->value);
+}
+
+int second(stack stk)
+{
+	return (stk->next->value);
+}
+
+int last(stack stk)
+{
+	return ((*tail_stack(&stk))->value);
+}
+
+Bool stack_is_sorted(stack stk)
+{
+	while (!stack_is_empty(stk) && stack_length(stk) > 1)
+	{
+		if(first(stk) > second(stk))
+			return (False);
+		stk = stk->next;
+	}
+	return (True);
 }

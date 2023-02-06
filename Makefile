@@ -6,7 +6,7 @@
 #    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 16:24:47 by hnait             #+#    #+#              #
-#    Updated: 2023/02/01 13:15:40 by hnait            ###   ########.fr        #
+#    Updated: 2023/02/06 14:43:08 by hnait            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,30 @@ FLAGS = -Wall -Werror -Wextra
 AR = ar -r
 RM = rm -f
 HEAD = push_swap.h
+MK = make
+LIBFT = ./libft/libft.a
+HEADLIBFT = ./libft/libft.h
+PRINTF = ./ft_printf/libftprintf.a
+HEADPRINTF = ./ft_printf/ft_printf.h
+PUSH_SWAP = push_swap
 
 SRC = instructions.c\
 		push_swap.c\
-		stack.c
+		stack.c\
+		sort.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
+		$(CC) main.c $(NAME) $(LIBFT) $(PRINTF) -o $(PUSH_SWAP) 
 
-$(NAME): $(OBJ)
+$(LIBFT): $(HEADLIBFT)
+	$(MK) -C ./libft
+
+$(PRINTF): $(HEADPRINTF)
+	$(MK) -C ./ft_printf
+	
+$(NAME): $(LIBFT) $(PRINTF) $(OBJ)
 		$(AR) $(NAME) $(OBJ)
 
 %.o : %.c $(HEAD)
@@ -33,9 +47,16 @@ $(NAME): $(OBJ)
 
 clean:
 		$(RM) $(OBJ) $(BNSOBJ)
+		$(MK) clean -C libft
+		$(MK) clean -C ft_printf
+		
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(LIBFT)
+	$(RM) $(PRINTF)
+	$(RM) $(PUSH_SWAP)
+	
 
 re: fclean all
 
