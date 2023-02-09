@@ -20,7 +20,7 @@ void push(stack *a, stack *b, char stk)
 	}
 }
 
-stack swap(stack stk, char stack)
+stack swap(stack stk, char name)
 {
 	int a;
 	int b;
@@ -31,7 +31,7 @@ stack swap(stack stk, char stack)
 	pop_stack(&stk);
 	stk = push_stack(stk, a);
 	stk = push_stack(stk, b);
-	ft_printf("s%c\n", stack);
+		ft_printf("s%c\n", name);
 	return (stk);
 }
 
@@ -57,5 +57,6 @@ void rotate_back(stack *a, char stk)
 	pop = tail_stack(a);
 	pop_stack(pop);
 	*a = push_stack(*a, e);
-	ft_printf("rr%c\n", stk);
+	if (stk != 'n')
+		ft_printf("rr%c\n", stk);
 }

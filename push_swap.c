@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:08:24 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/06 14:39:44 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/08 17:16:28 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ stack *push_swap(stack *a)
 	length_a = stack_length(*a);
 	b = new_stack();
 	sort(a, &b);
+	print_stack(*a);
 	return (a);
 }
 

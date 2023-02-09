@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:08:53 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/06 14:08:54 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/09 16:39:12 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void pop_stack(stack *stk)
 	if (stack_is_empty(*stk))
 		return ;
 	e = (*stk)->next;
-	free(*stk);
+	// free(*stk);
 	*stk = NULL;
 	*stk = e;
 }
@@ -101,14 +101,29 @@ stack	clear_stack(stack stk)
 	return (stk);
 }
 
-int isbigger(stack stk, int i)
+int index_of_bigger(stack stk, int number)
 {
+	int bigger_in_stk;
+	int index_of_bigger;
+	int i;
 
-	while (stk->next && stk->value < i)
+	i = 0;
+	bigger_in_stk = first(stk);
+	if (stack_is_empty(stk))
+		return (0);
+	while (stk && stk->next)
 	{
+		if (stk->value > number && stk->value < bigger_in_stk)
+		{
+			index_of_bigger = i;
+			bigger_in_stk = stk->value;
+			// ft_printf("lol %d, bigger %d\n", number, bigger_in_stk);
+			// ft_printf("just bigger : %d\n", number);
+		}
+		i++;
 		stk = stk->next;
 	}
-	return (stk->value);
+	return (index_of_bigger);
 }
 
 int find_small(stack stk)
@@ -147,7 +162,20 @@ int last(stack stk)
 	return ((*tail_stack(&stk))->value);
 }
 
-Bool stack_is_sorted(stack stk)
+int	number_by_index(stack stk, int index)
+{
+	int i;
+
+	i = 0;
+	while (i < index && stk->next)
+	{
+		stk = stk->next;
+		i++;
+	}
+	return (stk->value);
+}
+
+Bool	stack_is_sorted(stack stk)
 {
 	while (!stack_is_empty(stk) && stack_length(stk) > 1)
 	{
@@ -156,4 +184,20 @@ Bool stack_is_sorted(stack stk)
 		stk = stk->next;
 	}
 	return (True);
+}
+
+stack	clone_stack(stack stk)
+{
+	stack clone;
+	int i;
+
+	clone = new_stack();
+	i = 0;
+	while (i < stack_length(stk))
+	{
+		clone = push_stack(clone, last(stk));
+		rotate_back(&stk, 'n');
+		i++;
+	}
+	return (clone);
 }

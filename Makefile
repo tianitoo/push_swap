@@ -6,13 +6,13 @@
 #    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 16:24:47 by hnait             #+#    #+#              #
-#    Updated: 2023/02/06 14:43:08 by hnait            ###   ########.fr        #
+#    Updated: 2023/02/09 15:51:19 by hnait            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ps.a
 CC = cc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = 
 AR = ar -r
 RM = rm -f
 HEAD = push_swap.h
@@ -31,15 +31,12 @@ SRC = instructions.c\
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
+		$(MK) -C ./libft
+		$(MK) -C ./ft_printf
 		$(CC) main.c $(NAME) $(LIBFT) $(PRINTF) -o $(PUSH_SWAP) 
 
-$(LIBFT): $(HEADLIBFT)
-	$(MK) -C ./libft
-
-$(PRINTF): $(HEADPRINTF)
-	$(MK) -C ./ft_printf
 	
-$(NAME): $(LIBFT) $(PRINTF) $(OBJ)
+$(NAME): $(OBJ)
 		$(AR) $(NAME) $(OBJ)
 
 %.o : %.c $(HEAD)
