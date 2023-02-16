@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:08:11 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/16 14:04:08 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/16 14:19:30 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,13 +258,11 @@ stack sub(stack stk)
 		ft_printf("i = %d\n", i);
 		if (element_by_index(stk, i) > element_by_index(stk, i - 1))
 		{
-			/* code */
-		}
-		
-		substack = sub(element_by_index(stk, i));
-		if (stack_length(substack) > stack_length(longest_sub))
-		{
-			longest_sub = substack;
+			substack = sub(element_by_index(stk, i));
+			if (stack_length(substack) > stack_length(longest_sub))
+			{
+				longest_sub = substack;
+			}
 		}
 		i++;
 	}
