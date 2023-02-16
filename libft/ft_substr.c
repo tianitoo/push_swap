@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 17:13:05 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/07 11:12:05 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/11 20:06:02 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ss[i] = '\0';
 	return (ss);
 }
- 

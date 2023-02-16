@@ -1,3 +1,4 @@
+
 #include "push_swap.h"
 
 void push(stack *a, stack *b, char stk)
@@ -11,6 +12,7 @@ void push(stack *a, stack *b, char stk)
 		ft_printf("pa\n");
 	}
 	else
+	if (stk == 'b')
 	{
 		if (stack_is_empty(*a))
 			return ;
@@ -31,6 +33,7 @@ stack swap(stack stk, char name)
 	pop_stack(&stk);
 	stk = push_stack(stk, a);
 	stk = push_stack(stk, b);
+	if(stk != 0)
 		ft_printf("s%c\n", name);
 	return (stk);
 }
@@ -45,7 +48,8 @@ void rotate(stack *a, char stk)
 	e = push_stack(e, top_stack(*a));
 	pop_stack(a);
 	(*tail_stack(a))->next = e;
-	ft_printf("r%c\n", stk);
+	if(stk != 'n')
+		ft_printf("r%c\n", stk);
 }
 
 void rotate_back(stack *a, char stk)
@@ -59,4 +63,18 @@ void rotate_back(stack *a, char stk)
 	*a = push_stack(*a, e);
 	if (stk != 'n')
 		ft_printf("rr%c\n", stk);
+}
+
+void rr(stack *a, stack *b)
+{
+	rotate(a, 'n');
+	rotate(b, 'n');
+	ft_printf("rr\n");
+}
+
+void rrr(stack *a, stack *b)
+{
+	rotate_back(a, 'n');
+	rotate_back(b, 'n');
+	ft_printf("rrr\n");
 }

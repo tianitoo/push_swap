@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 02:31:51 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/06 12:32:50 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/12 14:26:23 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+void	free_ss(char **ss);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 int		ft_atoi(const char *str);
@@ -39,6 +40,7 @@ char	*ft_strdup(const char *s);
 t_list	*ft_lstnew(void *content);
 void	ft_bzero(void *s, size_t n);
 void	ft_putnbr_fd(int n, int fd);
+int		sslen(const char *s, char c);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
@@ -68,5 +70,5 @@ size_t	ft_strlcat(char *dst, const char *src,
 			size_t dstsize);
 size_t	ft_strlcpy(char *dst, const char *src,
 			size_t dstsize);
-int	is_space(char c);
+int		is_space(char c);
 #endif

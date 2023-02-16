@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:08:24 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/08 17:16:28 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/12 15:23:26 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,45 +20,17 @@ stack *push_swap(stack *a)
 	length_a = stack_length(*a);
 	b = new_stack();
 	sort(a, &b);
-	print_stack(*a);
+	// print_stack(*a);
 	return (a);
 }
 
-void move_small(stack *a,
-				int index,
-				char name,
-				void (*rotate)(stack *a,
-				char stk_name))
+
+
+int check_double(stack stk, int i)
 {
-	int i;
-
-	i = 0;
-	while (i < index)
-	{
-		(*rotate)(a, name);
-		i++;
-	}
-}
-
-int check_double(char **ss)
-{
-	int i;
-	int j;
-
-	i = 1;
-	while (ss[i])
-	{
-		j = i + 1;
-		while (ss[j])
-		{
-			if ((ft_strncmp(ss[i], ss[j], ft_strlen(ss[i])) == 0) 
-					&& ft_strlen(ss[i]) == ft_strlen(ss[j]))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
+	if (exists_in_stack(stk, i))
+		return (1);
+	return (0);
 }
 
 char **split(char *s)
@@ -88,6 +60,7 @@ char **split(char *s)
 			return (0);
 		}
 		i++;
+		
 	}
 			// ft_printf("test\n");
 	return (ss);

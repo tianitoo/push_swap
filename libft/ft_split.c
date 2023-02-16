@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 21:33:36 by hnait             #+#    #+#             */
-/*   Updated: 2022/11/12 14:01:07 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/10 15:56:18 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	sslen(const char *s, char c)
 	return (len);
 }
 
-static void	free_ss(char **ss)
+void	free_ss(char **ss)
 {
 	while (*ss)
 	{
