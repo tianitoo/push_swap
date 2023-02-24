@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   duplicate_rotations.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 14:08:24 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/24 15:50:08 by hnait            ###   ########.fr       */
+/*   Created: 2023/02/24 17:00:21 by hnait             #+#    #+#             */
+/*   Updated: 2023/02/24 17:00:22 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*push_swap(t_stack *a)
+void	rr(t_stack *a, t_stack *b)
 {
-	t_stack	b;
-
-	b = NULL;
-	sort(a, &b);
-	return (a);
+	rotate(a, 'n');
+	rotate(b, 'n');
+	ft_printf("rr\n");
 }
 
-int	check_double(t_stack stk, int i)
+void	rrr(t_stack *a, t_stack *b)
 {
-	if (exists_in_stack(stk, i))
-		return (1);
-	return (0);
+	rotate_back(a, 'n');
+	rotate_back(b, 'n');
+	ft_printf("rrr\n");
 }

@@ -6,12 +6,12 @@
 #    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 16:24:47 by hnait             #+#    #+#              #
-#    Updated: 2023/02/13 15:53:02 by hnait            ###   ########.fr        #
+#    Updated: 2023/02/24 20:31:14 by hnait            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ps.a
-CC = cc
+CC = cc -Wall -Wextra -Werror
 FLAGS = 
 AR = ar -r
 RM = rm -f
@@ -26,7 +26,13 @@ PUSH_SWAP = push_swap
 SRC = instructions.c\
 		push_swap.c\
 		stack.c\
-		sort.c
+		sort.c\
+		rotations.c\
+		duplicate_rotations.c\
+		stack_state.c\
+		get_index.c\
+		get_value.c\
+		get_element.c
 
 OBJ = $(SRC:.c=.o)
 

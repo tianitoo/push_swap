@@ -6,67 +6,72 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:08:11 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/16 14:19:30 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/24 20:27:20 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort(stack *a, stack *b)
+void	sort(t_stack *a, t_stack *b)
 {
-	// if (stack_length(*a) == 3)
-	// 	three(a, 'a');
-	// else
+	if (stack_length(*a) <= 3)
+		three(a, 'a');
+	else if (stack_length(*a) <= 5)
+		five(a, b);
+	else
 		more(a, b);
-		// print_stack(*a);
 }
 
-// void	three(stack *stk, char stk_name)
-// {
-// 	while (!stack_is_sorted(*stk))
-// 	{
-// 		if (first(*stk) > second(*stk) && first(*stk) > last(*stk))
-// 			rotate(stk, stk_name);
-// 		if (second(*stk) > first(*stk) && second(*stk) > last(*stk))
-// 			rotate_back(stk, stk_name);
-// 		if (!stack_is_sorted(*stk))
-// 			*stk = swap(*stk, stk_name);
-// 	}
-// }
-
-int	number_of_instructions(stack *a, stack b, int index)
+void	three(t_stack *stk, char stk_name)
 {
-	int moves;
+	while (!stack_is_sorted(*stk))
+	{
+		if (first(*stk) > second(*stk) && first(*stk) > last(*stk))
+			rotate(stk, stk_name);
+		if (second(*stk) > first(*stk) && second(*stk) > last(*stk))
+			rotate_back(stk, stk_name);
+		if (!stack_is_sorted(*stk))
+			*stk = swap(*stk, stk_name);
+	}
+}
+
+void	five(t_stack *a, t_stack *b)
+{
+	move_small(a, 'a');
+	push(a, b, 'b');
+	push(a, b, 'b');
+	three(a, 'a');
+	move(a, b, 0);
+	move(a, b, 1);
+}
+
+int	number_of_instructions(t_stack *a, t_stack b, int index)
+{
+	int	moves;
 	int	index_bigger;
+
 	index_bigger = index_of_bigger(*a, number_by_index(b, index));
-	// ft_printf("index of bigger of %d : %d\n",number_by_index(*b, index), index_bigger);
 	moves = 0;
 	if (index < stack_length(b) / 2)
 		moves += index;
 	else
 		moves += stack_length(b) - index;
-	
 	if (index_bigger <= stack_length(*a) / 2)
-	{
 		moves += index_bigger;
-	}
 	else
-	{
-		moves += stack_length(*a) - index_of_bigger(*a, number_by_index(b, index));
-	}
-	// ft_printf("number of moves %d\n", moves);
+		moves += stack_length(*a) - index_bigger;
 	return (moves + 1);
 }
 
 int	find_small_table(int *table, int length)
 {
-	int small;
-	int i;
-	int index;
+	int	small;
+	int	i;
+	int	index;
 
 	i = 0;
 	small = INT_MAX;
-	while (i <length)
+	while (i < length)
 	{
 		if (table[i] < small)
 		{
@@ -78,101 +83,110 @@ int	find_small_table(int *table, int length)
 	return (index);
 }
 
-void	move(stack *a, stack *b, int index)
+int	find_big_table(int *table, int length)
 {
-	int i;
-	int bigger;
-	int com_rotate;
-	int rra;
-	int rrb;
-	
-	bigger = index_of_bigger(*a, number_by_index(*b, index));
-		com_rotate = 0;
-	if (index < stack_length(*b) / 2 && bigger < stack_length(*a) / 2)
+	int	big;
+	int	i;
+	int	index;
+
+	i = 0;
+	big = INT_MIN;
+	while (i < length)
 	{
-		while (com_rotate < index && com_rotate < bigger)
+		if (table[i] > big)
+		{
+			big = table[i];
+			index = i;
+		}
+		i++;
+	}
+	return (index);
+}
+
+void	combine_rotate(t_stack *a, t_stack *b, int *bigger, int *index)
+{
+	int	com_rotate;
+	int	rra;
+	int	rrb;
+
+	com_rotate = 0;
+	if (*index < stack_length(*b) / 2 && *bigger < stack_length(*a) / 2)
+	{
+		while (com_rotate < *index && com_rotate < *bigger)
 			com_rotate++;
-		index -= com_rotate;
-		bigger -= com_rotate;
+		*index -= com_rotate;
+		*bigger -= com_rotate;
 		while (com_rotate-- > 0)
 			rr(a, b);
 	}
-	if ((index > stack_length(*b) / 2) && (bigger > stack_length(*a) / 2))
+	if ((*index > stack_length(*b) / 2) && (*bigger > stack_length(*a) / 2))
 	{
 		rra = stack_length(*a);
 		rrb = stack_length(*b);
-		while (rrb-- > index && rra-- > bigger)
+		while (rrb-- > *index && rra-- > *bigger)
 			com_rotate++;
-		index += com_rotate;
-		bigger += com_rotate;
-			// ft_printf("com rotate %d, index %d, bigger %d\n", com_rotate, index, bigger);
+		*index += com_rotate;
+		*bigger += com_rotate;
 		while (com_rotate-- > 0)
-		{
 			rrr(a, b);
-		}
 	}
-	i = 0;
-	if (index < stack_length(*b) / 2)
-	{
-		while (i < index)
-		{
-			rotate(b, 'b');
-			i++;
-		}
-	} else {
-		while ((stack_length(*b) - i) > index)
-		{
-			rotate_back(b, 'b');
-			i++;
-		}
-	}
-	i = 0;
-	if (bigger < stack_length(*a) / 2)
-	{
-		while (i < bigger)
-		{
-			rotate(a, 'a');
-			i++;
-		}
-	} else {
-		while ((stack_length(*a) - i) > bigger)
-		{
-			rotate_back(a, 'a');
-			i++;
-		}
-	}
-	push(a, b, 'a');
-	// if (*b && (*b)->next)
-	// 	if (first(*b) > second(*b))
-	// 		*b = swap(*b, 'b');
 }
 
-void	more(stack *a, stack *b)
+void	move(t_stack *a, t_stack *b, int index)
 {
-	stack tmp_b;
-	stack	sub;
-	int *moves;
-	int i;
+	int	i;
+	int	bigger;
 
+	bigger = index_of_bigger(*a, number_by_index(*b, index));
+	combine_rotate(a, b, &bigger, &index);
 	i = 0;
+	if (index < stack_length(*b) / 2)
+		while (i++ < index)
+			rotate(b, 'b');
+	else
+		while ((stack_length(*b) - i++) > index)
+			rotate_back(b, 'b');
+	i = 0;
+	if (bigger < stack_length(*a) / 2)
+		while (i++ < bigger)
+			rotate(a, 'a');
+	else
+		while ((stack_length(*a) - i++) > bigger)
+			rotate_back(a, 'a');
+	push(a, b, 'a');
+}
+
+void	push_to_b(t_stack *a, t_stack *b)
+{
+	t_stack	sub;
+
 	sub = lis(a);
-	ft_printf("sub ");
-	print_stack(sub);
 	while (stack_length(sub) < stack_length(*a))
 	{
 		if (!exists_in_stack(sub, first(*a)))
 		{
 			push(a, b, 'b');
+			if (first(*b) < number_by_index(*a, index_of_bigger(*a,
+						(biggest_in_stack(*a) + number_by_index(*a,
+								find_small_index(*a))) / 2)))
+				rotate(b, 'b');
 		}
 		else
-		{
 			rotate(a, 'a');
-			i++;
-		}
 	}
+	while (!stack_is_empty(sub))
+		pop_stack(&sub);
+}
+
+void	more(t_stack *a, t_stack *b)
+{
+	t_stack	tmp_b;
+	int		*moves;
+	int		i;
+
+	push_to_b(a, b);
 	while (!stack_is_empty(*b))
 	{
-		print_stack(*a);
 		moves = (int *) malloc (sizeof(int) * stack_length(*b));
 		if (!moves)
 			return ;
@@ -180,91 +194,104 @@ void	more(stack *a, stack *b)
 		i = 0;
 		while (!stack_is_empty(tmp_b))
 		{
-			moves[i] = number_of_instructions(a, *b, i); 
+			moves[i] = number_of_instructions(a, *b, i);
 			i++;
 			tmp_b = next(tmp_b);
 		}
 		move(a, b, find_small_table(moves, stack_length(*b)));
 		free(moves);
-		print_stack(*a);
 	}
 	move_small(a, 'a');
-	// if (stack_is_sorted(*a))
-	// 	print_stack(*a);
 }
 
-stack lis(stack *stk)
+int	*init_pre(int *number_of_pre, t_stack *stk)
 {
 	int	i;
-	int *liste;
-	int small;
-	stack sub;
 
-	if (stack_is_empty(*stk))
-		return (NULL);
-	sub = clone_stack(stk);
-	small = number_by_index(*stk, find_small(*stk));
-	
 	i = 0;
-	move_small(&sub, 'n');
-	rotate(&sub, 'n');
+	number_of_pre = (int *) ft_calloc (stack_length(*stk), sizeof(int));
 	while (i < stack_length(*stk))
 	{
-		print_stack(sub);
-		if (first(sub) == biggest_in_stack(sub))
-		{
-			rotate(&sub, 'n');
-			while (first(sub) != number_by_index(sub, find_small(sub)))
-			{
-				pop_stack(&sub);
-				i++;
-			}
-		}
-		else if (first(sub) > last(sub) && first(sub) < second(sub))
-		{
-			rotate(&sub, 'n');
-		}
-		else if (last(sub) > second(sub) || last(sub) > first(sub))
-		{
-			rotate(&sub, 'n');
-			pop_stack(&sub);
-			rotate_back(&sub, 'n');
-		}
-		else if (first(sub) > second(sub))
-		{
-			pop_stack(&sub);
-		}
+		number_of_pre[i] = -1;
 		i++;
 	}
-	return (sub);
+	return (number_of_pre);
 }
 
-
-stack sub(stack stk)
+void	find_pres(t_stack *stk, int **index, int **number_of_pre)
 {
-	int i;
-	stack substack;
-	stack longest_sub;
+	int	i;
+	int	j;
+	int	pre;
 
-	substack = new_stack();
-	longest_sub = new_stack();
-	i = 0;
-	while (i < stack_length(stk))
+	i = 1;
+	while (i < stack_length(*stk))
 	{
-		print_stack(stk);
-		pop_stack(&stk);
-		if (stack_is_empty(stk))
-			return (NULL);
-		ft_printf("i = %d\n", i);
-		if (element_by_index(stk, i) > element_by_index(stk, i - 1))
+		pre = -1;
+		j = 0;
+		while (j < i)
 		{
-			substack = sub(element_by_index(stk, i));
-			if (stack_length(substack) > stack_length(longest_sub))
+			if (number_by_index(*stk, j) < number_by_index(*stk, i)
+				&& pre < index[0][j])
 			{
-				longest_sub = substack;
+				pre = index[0][j];
+				index[0][i] = index[0][j] + 1;
+				number_of_pre[0][i] = j;
 			}
+			j++;
 		}
 		i++;
 	}
-	return (longest_sub);
+}
+
+t_stack	lis(t_stack *stk)
+{
+	int		*index;
+	int		*number_of_pre;
+	int		i;
+	t_stack	lis;
+
+	lis = NULL;
+	number_of_pre = NULL;
+	number_of_pre = init_pre(number_of_pre, stk);
+	index = (int *) ft_calloc (stack_length(*stk), sizeof(int));
+	find_pres(stk, &index, &number_of_pre);
+	i = find_big_table(number_of_pre, stack_length(*stk));
+	while (i != -1)
+	{
+		lis = push_stack(lis, number_by_index(*stk, i));
+		i = number_of_pre[i];
+	}
+	free(index);
+	free(number_of_pre);
+	return (lis);
+}
+
+void	move_small(t_stack *a, char name)
+{
+	int		i;
+	int		small;
+	int		index_of_small;
+	t_stack	tmp;
+
+	small = INT_MAX;
+	tmp = *a;
+	i = 0;
+	index_of_small = 0;
+	while (tmp)
+	{
+		if (tmp->value < small)
+		{
+			small = tmp->value;
+			index_of_small = i;
+		}
+		i++;
+		tmp = tmp->next;
+	}
+	if (index_of_small < stack_length(*a) / 2)
+		while (index_of_small-- > 0)
+			rotate(a, name);
+	else
+		while (index_of_small++ < stack_length(*a))
+			rotate_back(a, name);
 }

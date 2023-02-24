@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   stack_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 14:08:24 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/24 15:50:08 by hnait            ###   ########.fr       */
+/*   Created: 2023/02/24 20:29:36 by hnait             #+#    #+#             */
+/*   Updated: 2023/02/24 20:30:03 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*push_swap(t_stack *a)
+t_bool	stack_is_empty(t_stack stk)
 {
-	t_stack	b;
-
-	b = NULL;
-	sort(a, &b);
-	return (a);
+	if (stk == NULL)
+		return (True);
+	return (False);
 }
 
-int	check_double(t_stack stk, int i)
+t_bool	stack_is_sorted(t_stack stk)
 {
-	if (exists_in_stack(stk, i))
-		return (1);
-	return (0);
+	while (!stack_is_empty(stk) && stack_length(stk) > 1)
+	{
+		if (first(stk) > second(stk))
+			return (False);
+		stk = stk->next;
+	}
+	return (True);
 }
