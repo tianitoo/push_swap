@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 03:13:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/12 15:13:53 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/27 03:02:30 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_space(char c)
 
 int	ft_atoi(const char *str)
 {
-	unsigned long long	nbr;
+	long long	nbr;
 	int					signe;
 
 	nbr = 0;
@@ -43,9 +43,7 @@ int	ft_atoi(const char *str)
 	while (ft_isdigit(*str))
 	{
 		nbr = nbr * 10 + (*str++ - '0');
-		if (nbr > 9223372036854775807 && signe == 1)
-			return (-1);
-		if (nbr > 9223372036854775807 && signe == -1)
+		if (nbr > INT_MAX || nbr < INT_MIN)
 			return (0);
 	}
 	nbr = nbr * signe;

@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:09:10 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/24 20:32:06 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/27 05:41:09 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,17 @@ typedef struct s_element
 }t_element,	*t_stack;
 
 void	clear_stack(t_stack *stk);
+void	zero_parameter(char *concat);
 int		stack_length(t_stack stk);
 void	pop_stack(t_stack *stk);
 void	print_stack(t_stack stk);
 t_stack	push_stack(t_stack stk, int i);
+t_bool	check_arg(char *arg);
 t_stack	*push_swap(t_stack *a);
 void	push(t_stack *a, t_stack *b, char stk_name);
 t_stack	swap(t_stack stk, char stk_name);
 void	rotate(t_stack *a, char stk_name);
+void	push_to_b(t_stack *a, t_stack *b);
 void	rr(t_stack *a, t_stack *b);
 void	rotate_back(t_stack *a, char stk_name);
 t_stack	*tail_stack(t_stack *stk);
@@ -55,6 +58,7 @@ t_stack	element_by_index(t_stack stk, int index);
 int		check_double(t_stack stk, int i);
 void	three(t_stack *stk, char stk_name);
 int		last(t_stack stk);
+void	combine_rotate(t_stack *a, t_stack *b, int *bigger, int *index);
 t_stack	next(t_stack stk);
 int		find_small_index(t_stack stk);
 void	move(t_stack *a, t_stack *b, int index);
@@ -63,5 +67,15 @@ int		index_of_bigger(t_stack stk, int i);
 int		number_by_index(t_stack stk, int index);
 void	more(t_stack *a, t_stack *b);
 void	move_small(t_stack *a, char name);
+t_bool	check_arg(char *arg);
+char	*fix_zero(char *str);
+char	*concat_args(int argc, char **argv);
+void	end(char *concat, char **ss, int error, t_stack *stk);
+int		check_double(t_stack stk, int i);
+int		find_small_table(int *table, int length);
+int		*init_pre(int *number_of_pre, t_stack *stk);
+int		find_big_table(int *table, int length);
+
+void	find_pres(t_stack *stk, int **index, int **number_of_pre);
 t_stack	sub(t_stack stk);
 #endif

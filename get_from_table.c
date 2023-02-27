@@ -1,27 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   duplicate_rotations.c                              :+:      :+:    :+:   */
+/*   get_from_table.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/24 17:00:21 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/27 02:56:38 by hnait            ###   ########.fr       */
+/*   Created: 2023/02/24 20:50:03 by hnait             #+#    #+#             */
+/*   Updated: 2023/02/24 20:50:26 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rr(t_stack *a, t_stack *b)
+int	find_small_table(int *table, int length)
 {
-	rotate(a, 'n');
-	rotate(b, 'n');
-	ft_printf("rr\n");
+	int	small;
+	int	i;
+	int	index;
+
+	i = 0;
+	small = INT_MAX;
+	while (i < length)
+	{
+		if (table[i] < small)
+		{
+			small = table[i];
+			index = i;
+		}
+		i++;
+	}
+	return (index);
 }
 
-void	rrr(t_stack *a, t_stack *b)
+int	find_big_table(int *table, int length)
 {
-	rotate_back(a, 'n');
-	rotate_back(b, 'n');
-	ft_printf("rrr\n");
+	int	big;
+	int	i;
+	int	index;
+
+	i = 0;
+	big = INT_MIN;
+	while (i < length)
+	{
+		if (table[i] > big)
+		{
+			big = table[i];
+			index = i;
+		}
+		i++;
+	}
+	return (index);
 }

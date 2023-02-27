@@ -6,11 +6,11 @@
 #    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 16:24:47 by hnait             #+#    #+#              #
-#    Updated: 2023/02/24 20:31:14 by hnait            ###   ########.fr        #
+#    Updated: 2023/02/27 03:32:33 by hnait            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ps.a
+NAME = push_swap
 CC = cc -Wall -Wextra -Werror
 FLAGS = 
 AR = ar -r
@@ -21,9 +21,10 @@ LIBFT = ./libft/libft.a
 HEADLIBFT = ./libft/libft.h
 PRINTF = ./ft_printf/libftprintf.a
 HEADPRINTF = ./ft_printf/ft_printf.h
-PUSH_SWAP = push_swap
 
-SRC = instructions.c\
+
+SRC = main.c\
+		instructions.c\
 		push_swap.c\
 		stack.c\
 		sort.c\
@@ -32,18 +33,20 @@ SRC = instructions.c\
 		stack_state.c\
 		get_index.c\
 		get_value.c\
-		get_element.c
+		get_element.c\
+		best_number_of_instructions.c\
+		get_from_table.c\
+		longest_increasing_subseaquence.c\
+		check_args.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
-		$(MK) -C ./libft
-		$(MK) -C ./ft_printf
-		$(CC) main.c $(NAME) $(LIBFT) $(PRINTF) -o $(PUSH_SWAP) 
+	$(MK) -C ./libft
+	$(MK) -C ./ft_printf
 
-	
 $(NAME): $(OBJ)
-		$(AR) $(NAME) $(OBJ)
+	$(CC)  $(LIBFT) $(PRINTF) $^ -o $@
 
 %.o : %.c $(HEAD)
 		$(CC) -c $< -o $@ $(FLAGS)

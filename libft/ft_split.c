@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 21:33:36 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/10 15:56:18 by hnait            ###   ########.fr       */
+/*   Updated: 2023/02/27 01:51:33 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	free_ss(char **ss)
 		free(*ss);
 		ss++;
 	}
-	free(ss);
 }
 
 static int	next_sep(const char *s, int j, char c)
@@ -84,7 +83,7 @@ char	**ft_split(char const *s, char c)
 		{
 			ss[i] = cut_word(s, &j, c);
 			if (!ss[i])
-				return (free_ss(ss), NULL);
+				return (free_ss(ss), free(ss), NULL);
 			i++;
 		}
 	}
