@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:39:59 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/27 03:24:20 by hnait            ###   ########.fr       */
+/*   Updated: 2023/03/16 21:43:43 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	main(int argc, char **argv)
 	{
 		ss[i] = fix_zero(ss[i]);
 		if (!check_arg(ss[i]) || check_double(stk, ft_atoi(ss[i]))
-			|| (ss[i][0] != '0' && ft_atoi(ss[i]) == 0))
+			|| (((ss[i][0] != '+' || ss[i][0] != '-') && ss[i][1] != '0')
+			&& ft_atoi(ss[i]) == 0))
 			end(concat, ss, 1, &stk);
 		stk = push_stack(stk, ft_atoi(ss[i]));
 		i--;

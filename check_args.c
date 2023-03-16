@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:20:42 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/27 03:24:28 by hnait            ###   ########.fr       */
+/*   Updated: 2023/03/16 21:39:07 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	end(char *concat, char **ss, int error, t_stack *stk)
 		free_ss(ss);
 	if (error)
 		ft_printf("error\n");
-	while (!stack_is_empty(*stk))
-		pop_stack(stk);
+	if (stk)
+		while (!stack_is_empty(*stk))
+			pop_stack(stk);
 	exit(0);
 }
 
@@ -84,8 +85,10 @@ char	*fix_zero(char *str)
 {
 	char	*holder;
 
-	while (ft_strlen(str) > 1 &&
-		str[0] == '0' && (str[1] == '0' || str[1] != '0'))
+	while (ft_strlen(str) > 1
+		&& str[0] == '0'
+		&& (str[1] == '0'
+			|| str[1] != '0'))
 	{
 		holder = ft_strdup(&str[1]);
 		free(str);

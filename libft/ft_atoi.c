@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 03:13:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/02/27 03:02:30 by hnait            ###   ########.fr       */
+/*   Updated: 2023/03/14 09:42:10 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_space(char c)
 int	ft_atoi(const char *str)
 {
 	long long	nbr;
-	int					signe;
+	int			signe;
 
 	nbr = 0;
 	signe = 1;

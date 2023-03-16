@@ -6,7 +6,7 @@
 #    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 16:24:47 by hnait             #+#    #+#              #
-#    Updated: 2023/02/27 03:32:33 by hnait            ###   ########.fr        #
+#    Updated: 2023/03/14 10:59:32 by hnait            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = push_swap
 CC = cc -Wall -Wextra -Werror
 FLAGS = 
 AR = ar -r
-RM = rm -f
+RM = rm -rf
 HEAD = push_swap.h
 MK = make
 LIBFT = ./libft/libft.a
@@ -23,8 +23,7 @@ PRINTF = ./ft_printf/libftprintf.a
 HEADPRINTF = ./ft_printf/ft_printf.h
 
 
-SRC = main.c\
-		instructions.c\
+SRC = instructions.c\
 		push_swap.c\
 		stack.c\
 		sort.c\
@@ -41,18 +40,22 @@ SRC = main.c\
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
-	$(MK) -C ./libft
-	$(MK) -C ./ft_printf
+all: libft printf $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC)  $(LIBFT) $(PRINTF) $^ -o $@
+printf:
+	$(MK) -C ./ft_printf
+	
+libft:
+	$(MK) -C ./libft
+
+$(NAME): $(OBJ) $(LIBFT) $(PRINTF) main.c
+	$(CC) $^ -o $@
 
 %.o : %.c $(HEAD)
-		$(CC) -c $< -o $@ $(FLAGS)
+	$(CC) -c $^ $(FLAGS)
 
 clean:
-		$(RM) $(OBJ) $(BNSOBJ)
+		$(RM) $(OBJ) $(BNSOBJ) main.o
 		$(MK) clean -C libft
 		$(MK) clean -C ft_printf
 		
@@ -61,9 +64,8 @@ fclean: clean
 	$(RM) $(NAME)
 	$(RM) $(LIBFT)
 	$(RM) $(PRINTF)
-	$(RM) $(PUSH_SWAP)
 	
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean libft printf re
